@@ -4,12 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\DatabaseNotification;
 
 class post extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
+    
+    protected $fillable = [
+        'name',
+        'age',
+        'salary',
+        'image',
+        'Status',
+        'Gender', // Add the Status attribute to the fillable array
+    ];
     public function getRouteKeyName()
     {
         return 'id';
@@ -26,5 +38,9 @@ class post extends Model
     {
         return $this->belongsTo(User::class, 'user_id3');
     }
-    
+    public function notifications()
+    {
+        return $this->morphMany(DatabaseNotification::class, 'notifiable')
+                    ->orderBy('created_at', 'desc');
+    } 
 }

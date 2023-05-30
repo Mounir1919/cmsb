@@ -2,35 +2,35 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>SB Admin 2 - Tables</title>
+    <title>Users</title>
 
     <!-- Custom fonts for this template -->
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css') }}">
 <link rel="stylesheet" href="{{asset('fontawesome-free-6.4.0-web\css\all.min.css')}}">
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+
 
     <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
+    <style>
+    .fade-in {
+    animation-name: fadeIn;
+    animation-duration: 1.5s;
+  }
+</style>
 </head>
+
 
 <body id="page-top">
 
@@ -45,24 +45,27 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
+                @if(auth()->check())
+
+                <div class="sidebar-brand-text mx-3">Welcome  {{ auth()->user()->name }}</div>
+            </a>@endif
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
+            <div>
             <li class="nav-item">
                 <a class="nav-link" href="{{route('admin')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span style="font-size:20px;">Dashboard</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" style="font-size:20px;">
                 Interface
             </div>
 
@@ -71,15 +74,10 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span style="font-size:20px;">Components</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
+                
+           
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -87,25 +85,16 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span style="font-size:20px;">Utilities</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
+             
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" style="font-size:20px;">
                 Addons
             </div>
 
@@ -114,35 +103,24 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span style="font-size:20px;">Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
+        
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span style="font-size:20px;">Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
+                    <span style="font-size:20px;">Tables</span></a>
+            </li></div>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -172,28 +150,12 @@
                     </form>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                   
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-                        <li class="nav-item dropdown no-arrow d-sm-none">
-                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-search fa-fw"></i>
-                            </a>
+                        
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                 aria-labelledby="searchDropdown">
@@ -203,131 +165,14 @@
                                             placeholder="Search for..." aria-label="Search"
                                             aria-describedby="basic-addon2">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" type="button">
-                                                <i class="fas fa-search fa-sm"></i>
-                                            </button>
+                                            
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
-                        <!-- Nav Item - Messages -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
-                            </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-                            </div>
-                        </li>
+                        
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -335,31 +180,13 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
+                                @if(auth()->check())
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><h1 style="font-size:20px;"><b>{{ auth()->user()->name }}</b></h1></span>
+                               
+                                <img class="img-profile rounded-circle" style="height:50px;width:50px;"
+                                    src="{{auth()->user()->profile_photo_url}}">
+                            </a> @endif
+                            
                         </li>
 
                     </ul>
@@ -370,148 +197,307 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    
+                    <div id="table1">                            
+                    @if(session()->has('info'))
+    <div id="success-message" class="container alert alert-primary">
+        {{ session()->get('info') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+@endif
 
-                    <!-- DataTales Example -->
+@if(session()->has('restored'))
+    <div id="success-message" class="container alert alert-success">
+        {{ session()->get('restored') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+@endif
+@if(session()->has('restoreall'))
+    <div id="success-message" class="container alert alert-success">
+        {{ session()->get('restoreall') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+@endif
+@if(session()->has('delete3'))
+    <div id="success-message" class="container alert alert-danger">
+        {{ session()->get('delete3') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+@endif
+@if(session()->has('delete4'))
+    <div id="success-message" class="container alert alert-success">
+        {{ session()->get('delete4') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+@endif
+@if(session()->has('success'))
+        <div id="success-message" class="container alert alert-success">
+            {{session()->get('success')}}
+        </div>
+        <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+        @endif
+        
+        @if(session()->has('delete'))
+        <div id="success-message" class="container alert alert-danger">
+            {{session()->get('delete')}}
+        </div>
+        <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+        @endif
+        @if(session()->has('delete2'))
+        <div id="success-message" class="container alert alert-danger">
+            {{session()->get('delete2')}}
+        </div>
+        <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 5 seconds
+    </script>
+        @endif
+       
+ 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
+                            
+                        <div class="d-flex justify-content-between">
+  <h1 class="m-0 font-weight-bold text-primary mx-auto">Management Users</h1>
+  <form action="{{ route('users.download') }}" method="GET">
+    <button type="submit" class="dt-button buttons-print" name="download" id="download"><i class="fa-solid fa-file" style="font-size:20px;"></i>Excel F-Table</button>
+  </form>
+</div>
+</div>
+
+                        
+                        
                         <div class="card-body">
                             <div class="table-responsive">
                             <form id="delete-multiple-form" action="{{ route('post.deleteMultiple') }}" method="post">
         @csrf
         @method('DELETE')
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                    <form id="delete-multiple-form" action="{{ route('post.deleteMultiple') }}" method="post">
-    @csrf
-    @method('DELETE')
-    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    
+                                   
+
+        <table id="example" class="display nowrap" style="width:100%">
+       
         <thead>
             <tr>
                 @if(auth()->check())
                     @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                        <th>Select All</th>
-                    @endif
+                    <td class="text-center">
+                <input type="checkbox" id="selectAllCheckbox" onclick="selectAllCheckboxes()" />
+            </td>                    @endif
                 @endif
-                <th>ID</th>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Salary</th>
-                <th>Image</th>
-                <th>View</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Age</th>
+                <th class="text-center">Salary</th>
+                <th class="text-center">Image</th>
+                <th class="text-center">View</th>
                 @if(auth()->check())
                     @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                        <th>Delete</th>
-                        <th>Edit</th>
+                        <th class="text-center">Delete</th>
+                        <th class="text-center">Edit</th>
                     @endif
-                    @if($softDeletedUserCount > 0)
-                        <th><a href="{{ route('deleted') }}" class="btn btn-dark">Deleted Users</a></th>
-                    @endif
+                    
                 @endif
             </tr>
         </thead>
         <tbody>
             @foreach($posts as $t)
                 <tr>
-                    <td><input type="checkbox" name="selected_ids[]" value="{{$t->id}}" /></td>
-                    <td>{{$t->id}}</td>
-                    <td>{{$t->name}}</td>
-                    <td>{{$t->age}}</td>
-                    <td>{{$t->salary}}</td>
-                    <td><img src="{{ asset('./uploads/'.$t->image) }}" width="100" style="border-radius:30px;"></td>
-                    <td><a href="{{ route('post.show', $t->id) }}" class="btn btn-primary">Show</a></td>
-                    <td>
+<td class="text-center">
+                <input type="checkbox" name="selected_ids[]" value="{{$t->id}}" />
+            </td>                    <td class="text-center">{{$t->id}}</td></form>
+                    <td class="text-center">{{$t->name}}</td>
+                    <td class="text-center">{{$t->age}}</td>
+                    <td class="text-center">{{$t->salary}}</td>
+                    <td class="text-center"><img src="{{ asset('./uploads/'.$t->image) }}" width="100" style="border-radius:30px;"></td>
+                    <td class="text-center"><a href="{{ route('post.show', $t->id) }}" class="btn btn-primary" target="_blank">Show</a></td>
+                    <td class="text-center">
                         @if(auth()->check() && (auth()->user()->is_admin || auth()->user()->is_admin3))
                             <form id="{{$t->id}}" action="{{ route('post.delete', $t->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                            </form>
+                                </form>
                             <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete</button>
                         @endif
                     </td>
-                    <td><a href="{{ route('post.edit', $t->id) }}" class="btn btn-warning">Edit</a></td>
+                    <td class="text-center"><a href="{{ route('post.edit', $t->id) }}" class="btn btn-warning" style="text-align:center;">Edit</a></td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <div class="d-flex justify-content-center">
-            {{$posts->links()}}
-        </div>
+    <!-- <div class="d-flex justify-content-center">
+        </div> -->
+        @if($softDeletedUserCount > 0)
+        <button type="button" id="delusers"class="btn btn-primary">Deleted Users</button></div>
+                    @endif
         @if(auth()->check())
                         @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-        <button id="delete-selected-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete selected users?')) document.getElementById('delete-multiple-form').submit();" class="btn btn-danger" disabled type="submit">Delete Selected</button>
+                        <div class="text-center"> <button id="delete-selected-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete selected users?')) document.getElementById('delete-multiple-form').submit();" class="btn btn-danger" disabled type="submit">Delete Selected</button></div>
     </form>
-    <button onclick="selectAllCheckboxes()" class="btn btn-primary" type="button">Select All</button>
-    <button onclick="selectAllCheckboxes1()" class="btn btn-primary" type="button">UnSelect All</button>
 
 </div>
 @endif
-                @endif
-
+@endif 
+               
 </div>
+</div></div>
+<div  id="table2" style="display:none;">                            
+<div class="card shadow mb-4">
+    
+                        <div class="card-header py-3">
+                      
+                            <h1 class="m-0 font-weight-bold text-primary" style="text-align:center" >Management Trash</h1>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="table-responsive">                      
+        <table id="example2" class="display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th class="text-center">ID</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Age</th>
+                <th class="text-center">Salary</th>
+                <th class="text-center">Image</th>
+                <th class="text-center">View</th>
+                <th class="text-center">Delete Permanently</th>
+                <th class="text-center">Restore</th>
+            </tr>
+            </thead>
+        <tbody>
+            @foreach($deletedUsers as $t)
+    <tr>
+        <td class="text-center">{{$t->id}}</td>
+        <td class="text-center">{{$t->name}}</td>
+        <td class="text-center">{{$t->age}}</td>
+        <td class="text-center">{{$t->salary}}</td>
+        <td class="text-center"><img src="{{ asset('./uploads/'.$t->image) }}" width="100" style="border-radius:30px;"></td>
+        <td class="text-center"><a href="{{ route('post.show2', $t->id) }}" class="btn btn-primary" target="_blank">Show</a></td>
+        <form id="{{$t->id}}" action="{{ route('post.perma', $t->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+        </form>
+       
+            @if(auth()->check())
+                @if(auth()->user()->is_admin || auth()->user()->is_admin3)
+                <td class="text-center"><button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete Permanently</button></td>
+                    <form id="restore{{$t->id}}" action="{{ route('post.restore', $t->id) }}" method="put" style="display: inline;">
+                        @csrf
+                        @method('PUT')
+                        </form>
+                        <td class="text-center"><button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('restore{{$t->id}}').submit();"
+                        class="btn btn-success" type="submit">Restore</button></td>
+                @endif
+            @endif
+    </tr>
+@endforeach
+</tbody>
+        </table>
+  
+    <div class="text-center">
+    <form id="deleteAllForm" action="{{ route('post.permaall') }}" method="put" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('deleteAllForm').submit();" class="btn btn-danger" type="submit">Delete All Users Permanently</button></th>
+    </form>
+    <form id="restoreAllForm" action="{{ route('post.restoreall') }}" method="put" style="display: inline;">
+        @csrf
+        @method('PUT')
+        <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('restoreAllForm').submit();" class="btn btn-warning" type="submit">Restore All Users</button></th>
+    </form></div><br>
+    <button type="button" class="btn btn-danger" style="width:100px;" id="back">Back</button>
+    
+    <script>
+    var selectAllCheckbox = document.getElementById("selectAllCheckbox");
+var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#selectAllCheckbox)');
+var deleteSelectedButton = document.getElementById('delete-selected-button');
 
-<script>
-    function selectAllCheckboxes() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var allSelected = true;
-        
+if (selectAllCheckbox) {
+    selectAllCheckbox.onclick = function() {
+        var isChecked = selectAllCheckbox.checked;
         for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = true;
-            if (!checkboxes[i].checked) {
-                allSelected = false;
-            }
+            checkboxes[i].checked = isChecked;
         }
+        updateDeleteButtonState();
+    };
+}
 
-        var deleteSelectedButton = document.getElementById('delete-selected-button');
-        if (deleteSelectedButton) {
-            deleteSelectedButton.disabled = !allSelected;
-        }
+for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].onclick = function() {
+        updateDeleteButtonState();
+    };
+}
+
+function updateDeleteButtonState() {
+    var anyCheckboxSelected = isAnyCheckboxSelected();
+    if (deleteSelectedButton) {
+        deleteSelectedButton.disabled = !anyCheckboxSelected;
     }
+}
 
+function isAnyCheckboxSelected() {
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
     for (var i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].onclick = function() {
-            var deleteSelectedButton = document.getElementById('delete-selected-button');
-            if (deleteSelectedButton) {
-                deleteSelectedButton.disabled = !isAnyCheckboxSelected();
-            }
-        };
+        if (checkboxes[i].checked) {
+            return true;
+        }
     }
+    return false;
+}
 
-    function isAnyCheckboxSelected() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked) {
-                return true;
-            }
-        }
-        return false;
-    }
-</script>
-
-<script>
-        function selectAllCheckboxes1() {
-        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-        var allSelected = false;
-        
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = false;
-            if (!checkboxes[i].checked) {
-                allSelected = false;
-            }
-        }
-
-        var deleteSelectedButton = document.getElementById('delete-selected-button');
-        if (deleteSelectedButton) {
-            deleteSelectedButton.disabled = !allSelected;
-        }
-        }
 </script>
 </form>
 
@@ -548,24 +534,7 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -585,5 +554,177 @@
     <script src="js/demo/datatables-demo.js"></script>
 
 </body>
+<script charset="utf8" type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+<script charset="utf8" type="text/javascript" src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
 
+<script>
+$(document).ready(function() {
+    $('#example').DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            'copy',
+
+            {
+                extend: 'excel',
+                text: 'Excel',
+                filename: 'Table Users',
+                customize: function(xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var data = sheet.getElementsByTagName('row');
+                    
+                    // Remove unwanted columns
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        var cells = data[i].getElementsByTagName('c');
+                        for (var j = cells.length - 1; j >= 0; j--) {
+                            var cell = cells[j];
+                            var column = cell.getAttribute('r').replace(/[0-9]/g, '');
+                            
+                            // Check if the column header is not in the allowed list
+                            if (column !== 'A' && column !== 'B' && column !== 'C' && column !== 'D' && column !== 'E') {
+                                data[i].removeChild(cell);
+                            }
+                        }
+                    }
+                    
+                    xlsx.xl.worksheets['sheet1.xml'] = sheet;
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4] // Specify the column indexes to include (id, name, age, salary)
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4] // Specify the column indexes to include (id, name, age, salary)
+                }
+            }
+        ],
+        lengthMenu: [5,10, 15, 20, 25, 50, 100, 200, 300]
+
+    });
+});
+</script>
+<script>
+$(document).ready(function() {
+    $('#example2').DataTable({
+        dom: 'lBfrtip',
+        buttons: [
+            'copy',
+            
+            {
+                extend: 'excel',
+                text: 'Excel',
+                filename: 'Trash Users',
+                customize: function(xlsx) {
+                    var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                    var data = sheet.getElementsByTagName('row');
+                    
+                    // Remove unwanted columns
+                    for (var i = data.length - 1; i >= 0; i--) {
+                        var cells = data[i].getElementsByTagName('c');
+                        for (var j = cells.length - 1; j >= 0; j--) {
+                            var cell = cells[j];
+                            var column = cell.getAttribute('r').replace(/[0-9]/g, '');
+                            
+                            // Check if the column header is not in the allowed list
+                            if (column !== 'A' && column !== 'B' && column !== 'C' && column !== 'D') {
+                                data[i].removeChild(cell);
+                            }
+                        }
+                    }
+                    
+                    xlsx.xl.worksheets['sheet1.xml'] = sheet;
+                }
+            },
+            {
+                extend: 'pdf',
+                text: 'PDF',
+                exportOptions: {
+                    columns: [0, 1, 2, 3] // Specify the column indexes to include (id, name, age, salary)
+                }
+            },
+            {
+                extend: 'print',
+                text: 'Print',
+                exportOptions: {
+                    columns: [0, 1, 2, 3] // Specify the column indexes to include (id, name, age, salary)
+                }
+            }
+        ],
+        // pageLength: 5, // Display 5 records per page
+        lengthMenu: [5,10, 15, 20, 25, 50, 100, 200, 300]
+
+    });
+});
+</script>
+
+
+
+<script>
+    var  delusers = document.getElementById("delusers");
+  var table1 = document.getElementById("table1");
+  var table2= document.getElementById("table2");
+  var back= document.getElementById("back");
+
+
+
+  delusers.addEventListener("click", function() {
+    if (table1.style.display === "none" ) {
+      table1.classList.add("fade-in");
+      table1.style.display = "block";
+      table2.style.display = "none";
+      table2.classList.add("fade-in");
+     
+    } else {
+        table1.classList.add("fade-in");
+      table1.style.display = "none";
+      table2.style.display = "block";
+      table2.classList.add("fade-in");
+
+  }});
+  table1.addEventListener("animationend", function() {
+    table1.classList.remove("fade-in");
+  }); 
+  table2.addEventListener("animationend", function() {
+    table2.classList.remove("fade-in");
+  });
+  var  delusers = document.getElementById("delusers");
+  var table1 = document.getElementById("table1");
+  var table2= document.getElementById("table2");
+  var back= document.getElementById("back");
+
+
+
+  back.addEventListener("click", function() {
+    if (table2.style.display === "none" ) {
+      table1.classList.add("fade-in");
+      table1.style.display = "none";
+      table2.style.display = "block";
+      table2.classList.add("fade-in");
+     
+    } else {
+        table1.classList.add("fade-in");
+      table1.style.display = "block";
+      table2.style.display = "none";
+      table2.classList.add("fade-in");
+
+  }});
+  table1.addEventListener("animationend", function() {
+    table1.classList.remove("fade-in");
+  }); 
+  table2.addEventListener("animationend", function() {
+    table2.classList.remove("fade-in");
+  });
+</script>
 </html>

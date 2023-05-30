@@ -63,7 +63,15 @@
 <input type="file" value="{{ old('image') }}" class="form-control @error('image') is-invalid @enderror" width="300px" id="image" name="image">
 @error('image')<p class="text-danger">{{ $message }}</p>@enderror
             </div>
-            
+            <div class="mb-3">
+            <label for="gender">Gender:</label>
+  <select id="Gender" name="Gender" class="form-control @error('Gender') is-invalid @enderror" style="width: 300px;">
+    <option value=""></option>
+    <option value="Homme" type="text">Homme</option>
+    <option value="Femme" type="text">Femme</option>
+  </select>
+@error('Gender')<p class="text-danger">{{ $message }}</p>@enderror
+</div>        
 <br><br>
 <button type="submit"class="btn btn-success" style="width:100px;"> Add</button>
 

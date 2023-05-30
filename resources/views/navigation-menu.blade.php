@@ -4,14 +4,16 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <a href="{{ route ('home')}}">
-   <img width="50" STYLE="margin-top:10px;"height="90"src="/uploads/laravel.png" alt="">
-</a>
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('dashboard') }}">
+                        <x-application-mark class="block h-9 w-auto" />
+                    </a>
+                </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Users') }}
+                    <x-nav-link href="{{ route('admin') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Page Admin') }}
                     </x-nav-link>
                 </div>
             </div>

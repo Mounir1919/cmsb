@@ -6,15 +6,19 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "consoletvs/charts": "^6.6",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/validation": "*",
-        "laravel/framework": "^10.10",
+        "laravel/framework": "^10.0",
         "laravel/jetstream": "^3.2",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
-        "livewire/livewire": "^2.11"
+        "livewire/livewire": "^2.11",
+        "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "^1.15"
     },
+    
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
@@ -29,6 +33,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
+            
         }
     },
     "autoload-dev": {

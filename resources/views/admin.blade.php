@@ -10,6 +10,9 @@
     <meta name="author" content="">
 
     <title>SB Admin 2 - Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -19,7 +22,14 @@
     <!-- Custom styles for this template-->
     <link rel="stylesheet" href="{{ asset('css/sb-admin-2.min.css') }}">
 <link rel="stylesheet" href="{{asset('fontawesome-free-6.4.0-web\css\all.min.css')}}">
+<style>
 
+.fade-in {
+    animation-name: fadeIn;
+    animation-duration: 1.5s;
+  }
+
+</style>
 </head>
 
 <body id="page-top">
@@ -35,24 +45,27 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
-            </a>
+                @if(auth()->check())
+
+                <div class="sidebar-brand-text mx-3">Welcome  {{ auth()->user()->name }}</div>
+            </a>@endif
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
+            <div>
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{route('admin')}}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span style="font-size:20px;">Dashboard</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" style="font-size:20px;">
                 Interface
             </div>
 
@@ -61,15 +74,10 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>Components</span>
+                    <span style="font-size:20px;">Components</span>
                 </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
+                
+           
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -77,60 +85,42 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Utilities</span>
+                    <span style="font-size:20px;">Utilities</span>
                 </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
+             
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" style="font-size:20px;">
                 Addons
             </div>
+
+            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
+                    <span style="font-size:20px;">Pages</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
+        
             </li>
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="charts.html">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span style="font-size:20px;">Charts</span></a>
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{route('tables')}}">
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('tables')}}">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
-            </li>
+                    <span style="font-size:20px;">Tables</span></a>
+            </li></div>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -165,18 +155,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form
-                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -205,57 +184,56 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
+                       <!-- Nav Item - Alerts -->
+<li class="nav-item dropdown no-arrow mx-1" >
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bell fa-fw"></i>
+        <!-- Counter - Alerts -->
+        @if(auth()->user()->unreadNotifications->count() > 0)
+            <span  class="badge badge-danger badge-counter">{{ auth()->user()->unreadNotifications->count() }}</span>
+        @endif
+    </a>
+    <!-- Dropdown - Alerts -->
+   
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="width: 474px !important;">
+    <h6 class="dropdown-header">
+        Alerts Center
+    </h6>
+    <!-- Rest of the dropdown menu content -->
+    <div style="max-height: 380px; overflow-y: auto;">
+        @foreach(auth()->user()->unreadNotifications as $notification)
+            <a class="dropdown-item d-flex align-items-center" href="#">
+                <div class="mr-3">
+                        <div class="icon-circle bg-primary">
+                            @if ($notification->data['image'] != NULL)
+                                <img src="{{ asset('uploads/' . $notification->data['image']) }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @elseif ($notification->data['Gender'] === 'Homme')
+                                <img src="{{ asset('uploads/empty_man.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @elseif ($notification->data['Gender'] === 'Femme')
+                                <img src="{{ asset('uploads/empty_woman1.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @endif
+                        </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center flex-grow-1">
+                    <div>
+                        <div class="small text-gray-500">{{ $notification->created_at->format('F d, Y') }}</div>
+                        <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
+                    </div>
+                    <div class="ml-4">
+                        <form action="{{ route('confirm-user', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to confirm?')">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+        @endforeach
+    </div>
+    <a class="dropdown-item text-center small text-gray-500" style="cursor:pointer;" id="okay">Show All Alerts</a>
+</div>
+</li>
+                            
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
@@ -328,10 +306,12 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
-                            </a>
+                                @if(auth()->check())
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><h1 style="font-size:20px;"><b>{{ auth()->user()->name }}</b></h1></span>
+                               
+                                <img class="img-profile rounded-circle" style="height:50px;width:50px;"
+                                    src="{{auth()->user()->profile_photo_url}}">
+                            </a> @endif
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -380,11 +360,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            Users Registered</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $userCount }}</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -398,11 +378,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                                Trash Users</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $userTrash }}</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-trash fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -415,18 +395,18 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tasks
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Unconfirmed Users
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">50%</div>
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$userunconfirmed}}</div>
                                                 </div>
                                                 <div class="col">
-                                                    <div class="progress progress-sm mr-2">
-                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                    <!-- <div class="progress progress-sm mr-2"> -->
+                                                        <!-- <div class="progress-bar bg-info" role="progressbar"
                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                                                            aria-valuemax="100"></div> -->
+                                                    <!-- </div> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -464,34 +444,134 @@
                         <!-- Area Chart -->
                         <div class="col-xl-8 col-lg-7">
                             <div class="card shadow mb-4">
+                            <div class="container" style="display:none;" id="confirmall">
+                    <h6 class="mt-4">Alerts Center</h6>
+                    <div style="max-height: 500px; overflow-y: auto;">
+                    @foreach(auth()->user()->unreadNotifications as $notification)
+                        <div class="card mb-3">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        @if ($notification->data['image'] != NULL)
+                                            <img src="{{ asset('uploads/' . $notification->data['image']) }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @elseif ($notification->data['Gender'] === 'Homme')
+                                <img src="{{ asset('uploads/empty_man.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @elseif ($notification->data['Gender'] === 'Femme')
+                                <img src="{{ asset('uploads/empty_woman1.png') }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                            @endif
+                        </div>
+
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="small text-gray-500">{{ $notification->created_at->format('F d, Y') }}</div>
+                        <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
+                    </div>
+                    <div class="ml-4">
+                        <form action="{{ route('confirm-user', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-primary">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
+    <form action="{{ route('confirmAllUsers') }}" method="POST" class="d-inline">
+    @csrf
+    <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to confirm all users?')">Confirm all</button>
+</form>
+   <a class="btn btn-sm btn-danger" id="back"style="cursor:pointer;width:100px;"><i class="fa-solid fa-arrow-left"></i> back</a>
+
+</div>
+
+
                                 <!-- Card Header - Dropdown -->
-                                <div
+                        <div  id="bar">
+                                <div 
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                    <h6 class="m-0 font-weight-bold text-primary" >Earnings Overview</h6>
+                                    
+                               
                                 </div>
+
                                 <!-- Card Body -->
-                                <div class="card-body">
+                                <div class="card-body" >
                                     <div class="chart-area">
-                                        <canvas id="myAreaChart"></canvas>
-                                    </div>
+<div style="width: 900px; height: 320px;">
+  <canvas id="myChart" style="width: 100%; height: 100%;"></canvas>
+</div>
+<script>
+$(document).ready(function() {
+    // Handle the click event on the notification icon or trigger
+    $('.dropdown-toggle').on('click', function(e) {
+        e.preventDefault();
+        $(this).next('.dropdown-menu').toggle();
+    });
+    
+    // Close the dropdown menu when clicking outside of it
+    $(document).on('click', function(e) {
+        var target = e.target;
+        if (!$(target).is('.dropdown-toggle') && !$(target).parents().is('.dropdown-toggle')) {
+            $('.dropdown-menu').hide();
+        }
+    });
+});
+</script>
+
+
+
+<script>
+    const labels = <?php echo '["' . implode('", "', $labels) . '"]'; ?>;
+    const createdData = <?php echo '[' . implode(', ', $createdData) . ']'; ?>;
+    const deletedData = <?php echo '[' . implode(', ', $deletedData) . ']'; ?>;
+    const unconfirmedUsersData = <?php echo '[' . implode(', ', $unconfirmedUsersData) . ']'; ?>;
+
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Users Registered',
+                    data: createdData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)', // Green color
+                    borderColor: 'rgba(75, 192, 192, 1)', // Green color
+                    borderWidth: 1,
+                },
+                {
+                    label: 'Trash Users',
+                    data: deletedData,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Red color
+                    borderColor: 'rgba(255, 99, 132, 1)', // Red color
+                    borderWidth: 1,
+                },
+                {
+                    label: 'Unconfirmed Users',
+                    data: unconfirmedUsersData,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)', // Purple color
+                    borderColor: 'rgba(153, 102, 255, 1)', // Purple color
+
+                    borderWidth: 1,
+                },
+            ],
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+</script>
+
+                          </div>
                                 </div>
                             </div>
                         </div>
-
+                        </div>
                         <!-- Pie Chart -->
                         <div class="col-xl-4 col-lg-5">
                             <div class="card shadow mb-4">
@@ -499,37 +579,57 @@
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div>
-                                    </div>
+                                    
+                                  
                                 </div>
                                 <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="myPieChart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                                    </div>
+                                <div class="card-body"  >
+                                    <!-- Add this to your Laravel blade template -->
+
+                                    <canvas id="doughnut-chart"></canvas>
+<script>
+    const userCount = <?php echo $userCount; ?>;
+    const userTrash = <?php echo $userTrash; ?>;
+    const userunconfirmed = <?php echo $userunconfirmed; ?>;
+
+    const totalUsers = userCount + userTrash + userunconfirmed;
+
+    const userCountPercentage = ((userCount / totalUsers) * 100).toFixed(1);
+    const userTrashPercentage = ((userTrash / totalUsers) * 100).toFixed(1);
+    const unconfirmedUsersPercentage = ((userunconfirmed / totalUsers) * 100).toFixed(1);
+
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+            labels: ['Users registered', 'Trash Users', 'Unconfirmed Users'],
+            datasets: [{
+                label: "User Data",
+                backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(153, 102, 255, 0.2)'],
+                borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)', 'rgba(153, 102, 255, 1)'],
+                data: [userCountPercentage, userTrashPercentage, unconfirmedUsersPercentage]
+    
+
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'User Data Chart'
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return context.formattedValue + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+                                    
                                 </div>
                             </div>
                         </div>
@@ -734,23 +834,82 @@
             </div>
         </div>
     </div>
+    <script>
+    var  okay = document.getElementById("okay");
+  var confirmall = document.getElementById("confirmall");
+  var bar= document.getElementById("bar");
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+  okay.addEventListener("click", function() {
+    if (bar.style.display === "none" ) {
+      bar.classList.add("fade-in");
+      bar.style.display = "block";
+      confirmall.classList.add("fade-in");
+      confirmall.style.display = "none";
+     
+    } else {
+    confirmall.classList.add("fade-in");
+    confirmall.style.display = "block";
+      bar.style.display = "none";
+      bar.classList.add("fade-in");
+
+  }});
+  bar.addEventListener("animationend", function() {
+    bar.classList.remove("fade-in");
+  }); 
+  confirmall.addEventListener("animationend", function() {
+    confirmall.classList.remove("fade-in");
+  });
+  
+</script>
+<script>
+    var  back = document.getElementById("back");
+  var confirmall = document.getElementById("confirmall");
+  var bar= document.getElementById("bar");
+  back.addEventListener("click", function() {
+    if (confirmall.style.display === "none" ) {
+      confirmall.classList.add("fade-in");
+      confirmall.style.display = "block";
+      bar.classList.add("fade-in");
+      bar.style.display = "none";
+     
+    } else {
+    bar.classList.add("fade-in");
+    bar.style.display = "block";
+      confirmall.style.display = "none";
+      confirmall.classList.add("fade-in");
+
+  }});
+  bar.addEventListener("animationend", function() {
+    bar.classList.remove("fade-in");
+  }); 
+  confirmall.addEventListener("animationend", function() {
+    confirmall.classList.remove("fade-in");
+  });
+  
+</script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src= href="{{ asset('js/sb-admin-2.min.js')}}" ></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="{{ asset('vendor/chart.js/Chart.min.js')}}"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="{{ asset('js/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ asset('js/demo/chart-pie-demo.js') }}"></script>
+    <script src="{{ asset('js/demo/chart-bar-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

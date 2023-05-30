@@ -95,14 +95,13 @@
 <div class="container alert alert-dark my-5 text-center">
     <h1>Management Users</h1>
     <hr>
-    <form id="delete-multiple-form" action="{{ route('post.deleteMultiple') }}" method="post">
-        @csrf
-        @method('DELETE')
+ 
         <table class="table">
-            <tr> @if(auth()->check())
-                        @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                <th>Select All</th>
-                @endif
+            <tr>
+                @if(auth()->check())
+                    @if(auth()->user()->is_admin || auth()->user()->is_admin3)
+                        <th>Select All</th>
+                    @endif
                 @endif
                 <th>ID</th>
                 <th>Name</th>
@@ -111,58 +110,65 @@
                 <th>Image</th>
                 <th>View</th>
                 @if(auth()->check())
-                        @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                <th>Delete</th>
-                <th>Edit</th>
-                @endif
-                @if(auth()->check())
-                        @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                @if($softDeletedUserCount > 0)
-                    <th><a href="{{ route('deleted') }}" class="btn btn-dark">Deleted Users</a></th>
-                @endif
-                @endif
+                    @if(auth()->user()->is_admin || auth()->user()->is_admin3)
+                        <th>Delete</th>
+                        <th>Edit</th>
+                    @endif
+                    @if($softDeletedUserCount > 0)
+                        <th><a href="{{ route('deleted') }}" class="btn btn-dark">Deleted Users</a></th>
+                    @endif
                 @endif
             </tr>
             @foreach($posts as $t)
-                <tr>
-
+                <tr> <form id="delete-multiple-form" action="{{ route('post.deleteMultiple') }}" method="post">
+        @csrf
+        @method('DELETE')
                     <td><input type="checkbox" name="selected_ids[]" value="{{$t->id}}" /></td>
                     <td>{{$t->id}}</td>
                     <td>{{$t->name}}</td>
                     <td>{{$t->age}}</td>
                     <td>{{$t->salary}}</td>
-                    <td><img src="{{ asset('./uploads/'.$t->image) }}" width="100" style="border-radius:30px;"></td>
+<td>
+    @if ($t->image)
+        <img src="{{ asset('uploads/'.$t->image) }}" width="100" style="border-radius:30px;">
+    @else
+        @if ($t->Gender === 'Homme')
+            <img src="{{ asset('uploads/empty_man.png') }}" width="100" style="border-radius:30px;">
+        @elseif ($t->Gender === 'Femme')
+            <img src="{{ asset('uploads/empty_woman1.png') }}" width="100" style="border-radius:30px;">
+        @endif
+    @endif
+</td>
                     <td><a href="{{ route('post.show', $t->id) }}" class="btn btn-primary">show</a></td>
                     <td>
                         @if(auth()->check())
-                        @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-                        <form id="{{$t->id}}" action="{{ route('post.delete', $t->id) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                        <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete</button>
+                            @if(auth()->user()->is_admin || auth()->user()->is_admin3)
+                                <form action="{{ route('post.delete', $t->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                <button  class="btn btn-danger" type="submit">Delete</button>
+                            @endif
+                        @endif                                </form>
+
                     </td>
                     <td><a href="{{ route('post.edit',$t->id) }}" class="btn btn-warning">edit</a></td>
                 </tr>
-                @endif
-                @endif
             @endforeach
         </table>
         <div class="d-flex justify-content-center">
             {{$posts->links()}}
         </div>
+       
         @if(auth()->check())
-                        @if(auth()->user()->is_admin || auth()->user()->is_admin3)
-        <button id="delete-selected-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete selected users?')) document.getElementById('delete-multiple-form').submit();" class="btn btn-danger" disabled type="submit">Delete Selected</button>
-    </form>
-    <button onclick="selectAllCheckboxes()" class="btn btn-primary" type="button">Select All</button>
-    <button onclick="selectAllCheckboxes1()" class="btn btn-primary" type="button">UnSelect All</button>
+            @if(auth()->user()->is_admin || auth()->user()->is_admin3)
+                <button id="delete-selected-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete selected users?')) document.getElementById('delete-multiple-form').submit();" class="btn btn-danger" disabled type="submit">Delete Selected</button>
+            @endif
+        <button onclick="selectAllCheckboxes()" class="btn btn-primary" type="button">Select All</button>
+        <button onclick="selectAllCheckboxes1()" class="btn btn-primary" type="button">Unselect All</button>
+    @endif    
 
-</div>
-@endif
-                @endif
+</div></form>
 
-</div>
 
 <script>
     function selectAllCheckboxes() {
