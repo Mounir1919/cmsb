@@ -79,6 +79,14 @@
                 
            
             </li>
+            <li class="nav-item active" >
+                <a class="nav-link " href="{{route ('show_admin')}}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span style="font-size:20px;">Admin </span>
+                </a>
+                
+           
+            </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
@@ -116,7 +124,7 @@
             </li>
 
             <!-- Nav Item - Tables -->
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="{{ route ('tables')}}">
                     <i class="fas fa-fw fa-table"></i>
                     <span style="font-size:20px;">Tables</span></a>
@@ -247,7 +255,45 @@
         }, 7000); // 7000 milliseconds = 7 seconds
     </script>
 @endif
-
+@if(session()->has('info_admin'))
+    <div id="success-message" class="container alert alert-primary">
+        {{ session()->get('info_admin') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 7 seconds
+    </script>
+@endif
+@if(session()->has('success_admin'))
+    <div id="success-message" class="container alert alert-success">
+        {{ session()->get('success_admin') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 7 seconds
+    </script>
+@endif
+@if(session()->has('delete_admin'))
+    <div id="success-message" class="container alert alert-danger">
+        {{ session()->get('delete_admin') }}
+    </div>
+    <script>
+        setTimeout(function() {
+            var successMessage = document.getElementById('success-message');
+            if (successMessage) {
+                successMessage.remove();
+            }
+        }, 7000); // 7000 milliseconds = 7 seconds
+    </script>
+@endif
 @if(session()->has('restored'))
     <div id="success-message" class="container alert alert-success">
         {{ session()->get('restored') }}
@@ -304,129 +350,48 @@
         }
     }, 7000); // 7000 milliseconds = 7 seconds
 </script>
-
-       
- 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             
                         <div class="d-flex justify-content-between">
-  <h1 class="m-0 font-weight-bold text-primary mx-auto">Management Users</h1>
-  <form action="{{ route('users.download') }}" method="GET">
-    <button type="submit" class="dt-button buttons-print" name="download" id="download"><i class="fa-solid fa-file" style="font-size:20px;"></i>Excel F-Table</button>
-  </form>
+  <h1 class="m-0 font-weight-bold text-primary mx-auto">Management Admin</h1>
+  <a href="{{ route('register')}}" class="btn btn-primary"style="height: 50px; padding: 13px;" name="admin" id="admin"><i class="fa-solid fa-user-plus"></i> Add Admin</a>&nbsp;&nbsp;
+  <a class="btn btn-success" style="height: 50px; padding: 13px;" id="upgrade"><i class="fa-solid fa-user-pen"></i> Edit Admin</a>
 </div>
-</div>
-
-                        
-                        
-                        <div class="card-body">
-                            <div class="table-responsive">
-                            <form id="delete-multiple-form" action="{{ route('post.deleteMultiple') }}" method="post">
-        @csrf
-        @method('DELETE')
-                                    
-                                   
-
-        <table id="example" class="display nowrap" style="width:100%">
-       
+</div>                       
+<div class="card-body">
+    <div class="table-responsive">
+        <table id="example" class="display nowrap" style="width:100%">      
         <thead>
             <tr>
-        @if(auth()->check())
-        @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-                    <td class="text-center">
-                <input type="checkbox" id="selectAllCheckbox" onclick="selectAllCheckboxes()" />
-            </td>                    @endif
-                @endif
+   
                 <th class="text-center">ID</th>
                 <th class="text-center">Name</th>
-                <th class="text-center">Age</th>
-                <th class="text-center">Salary</th>
+                <th class="text-center">E-mail</th>
+                <th class="text-center">Status</th>
                 <th class="text-center">Image</th>
-                <th class="text-center">Pdf</th>
-                <th class="text-center">Pdf2</th>
-                <th class="text-center">RAR</th>
-                <th class="text-center">View</th>
-                
-                @if(auth()->check())
-        @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-                        <th class="text-center">Delete</th>
-                        <th class="text-center">Edit</th>
-                    @endif
-                    
-                @endif
+    
             </tr>
         </thead>
         <tbody>
-            @foreach($posts as $t)
+            @foreach($users as $t)
                 <tr>
-<td class="text-center">
-                <input type="checkbox" name="selected_ids[]" value="{{$t->id}}" />
-            </td>                    <td class="text-center">{{$t->id}}</td></form>
+                    <td class="text-center">{{$t->id}}</td></form>
                     <td class="text-center">{{$t->name}}</td>
-                    <td class="text-center">{{$t->age}}</td>
-                    <td class="text-center">{{$t->salary}}</td>
+                    <td class="text-center">{{$t->email}}</td>
+                    <td class="text-center">{{$t->status}}</td>
                     <td class="text-center">
-                        @if(isset($t->image))
-                            <a href="{{ asset('./uploads/'.$t->image) }}" download>Download Image</a>
+                        @if(isset($t->profile_photo_path))
+                            <a href="{{ asset('./storage/'.$t->profile_photo_path) }}" download>Download Image</a>
                         @else
                             File not available
                         @endif
-                    </td>                    <td class="text-center">
-                        @if(isset($t->pdf))
-                            <a href="{{ asset('./pdfs/'.$t->pdf) }}" download>Download PDF</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>
-                    <td class="text-center">
-                        @if(isset($t->pdf2))
-                            <a href="{{ asset('./pdfs2/'.$t->pdf2) }}" download>Download PDF</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>
-                    <td class="text-center">
-                        @if(isset($t->pdf) && (isset($t->pdf2) && isset($t->image)))
-                            <a href="{{ route('downloadRAR', ['pdf' => $t->pdf, 'pdf2' => $t->pdf2, 'name' => $t->name, 'image' => $t->image]) }}" download>Download RAR</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>
-
-
-
-                    <td class="text-center"><a href="{{ route('post.show', $t->id) }}" class="btn btn-primary" target="_blank">Show</a></td>
-                    <td class="text-center">
-                        @if(auth()->check() && (auth()->user()->status == 'Medium' || auth()->user()->istatus == 'Low'))
-                            <form id="{{$t->id}}" action="{{ route('post.delete', $t->id) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                </form>
-                            <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete</button>
-                        @endif
-                    </td>
-                    <td class="text-center"><a href="{{ route('post.edit', $t->id) }}" class="btn btn-warning" style="text-align:center;">Edit</a></td>
+                    </td>                   
+                 
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <!-- <div class="d-flex justify-content-center">
-        </div> -->
-        @if($softDeletedUserCount > 0)
-        <button type="button" id="delusers"class="btn btn-primary">Deleted Users</button></div>
-                    @endif
-        @if(auth()->check())
-        @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-                        <div class="text-center"> <button id="delete-selected-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to delete selected users?')) document.getElementById('delete-multiple-form').submit();" class="btn btn-danger" disabled type="submit">Delete Selected</button></div>
-    </form>@endif
-@endif
-    <div class="text-center">
-  <form id="download-all-form" action="{{ route('users.downloadAll') }}" method="GET">
-    @csrf
-    <button id="download-all-button" onclick="event.preventDefault(); if (confirm('Are you sure you want to download all users?')) document.getElementById('download-all-form').submit();" class="btn btn-primary" type="submit">Download All</button>
-  </form>
-</div>
 </div>
  
                
@@ -434,154 +399,71 @@
 </div></div>
 <div  id="table2" style="display:none;">                            
 <div class="card shadow mb-4">
-    
                         <div class="card-header py-3">
-                      
-                            <h1 class="m-0 font-weight-bold text-primary" style="text-align:center" >Management Trash</h1>
-                        </div>
-                        
-                        <div class="card-body">
-                            <div class="table-responsive">                      
+                            
+                        <div class="d-flex justify-content-between">
+  <h1 class="m-0 font-weight-bold text-primary mx-auto">Edit Admin</h1>
+
+</div>
+</div>                       
+<div class="card-body">
+    <div class="table-responsive">
         <table id="example2" class="display nowrap" style="width:100%">
-        <thead>
-            <tr>
-                <th class="text-center">ID</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">Age</th>
-                <th class="text-center">Salary</th>
-                <th class="text-center">Image</th>
-                <th class="text-center">Pdf</th>
-                <th class="text-center">Pdf2</th>
-                <th class="text-center">RAR</th>
-                <th class="text-center">View</th>
-                @if(auth()->check())
-                @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-                <th class="text-center">Delete Permanently</th>
-                <th class="text-center">Restore</th>
-                @endif
-                @endif
-            </tr>
+            <thead>
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">E-mail</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
+
+                </tr>
             </thead>
-        <tbody>
-            @foreach($deletedUsers as $t)
+            <tbody>
+           
+            @foreach($users as $t)
     <tr>
         <td class="text-center">{{$t->id}}</td>
-        <td class="text-center">{{$t->name}}</td>
-        <td class="text-center">{{$t->age}}</td>
-        <td class="text-center">{{$t->salary}}</td>
-        
         <td class="text-center">
-                        @if(isset($t->image))
-                            <a href="{{ asset('./uploads/'.$t->image) }}" download>Download Image</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>                    <td class="text-center">
-                        @if(isset($t->pdf))
-                            <a href="{{ asset('./pdfs/'.$t->pdf) }}" download>Download PDF</a>
-                        @else
-                            File not available
-                        @endif
+    <form action="{{ route('up', $t->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to edit this user?')">
+        @csrf
+        <input type="text" class="form-control" name="name" value="{{$t->name}}">
+</td>
+        <td class="text-center">
+            <input type="email" class="form-control" name="email" value="{{$t->email}}">
+        </td>
+        <td class="text-center">
+            <select class="form-control" name="status">
+                <option value="High" {{$t->status == 'High' ? 'selected' : ''}}>High</option>
+                <option value="Medium" {{$t->status == 'Medium' ? 'selected' : ''}}>Medium</option>
+                <option value="Low" {{$t->status == 'Low' ? 'selected' : ''}}>Low</option>
+            </select>
+        </td>
+        <td class="text-center">
+            <button type="submit" class="btn btn-warning">Edit</button>
+            </form>
+        </td>
+        <td class="text-center">
+                            <form id="{{$t->id}}" action="{{ route('delete_admin', $t->id) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                </form>
+                            <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete</button>
                     </td>
-                    <td class="text-center">
-                        @if(isset($t->pdf2))
-                            <a href="{{ asset('./pdfs2/'.$t->pdf2) }}" download>Download PDF</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>
-                    <td class="text-center">
-                        @if(isset($t->pdf) && (isset($t->pdf2) && isset($t->image)))
-                            <a href="{{ route('trashRAR', ['pdf' => $t->pdf, 'pdf2' => $t->pdf2, 'name' => $t->name, 'image' => $t->image]) }}" download>Download RAR</a>
-                        @else
-                            File not available
-                        @endif
-                    </td>        <td class="text-center"><a href="{{ route('post.show2', $t->id) }}" class="btn btn-primary" target="_blank">Show</a></td>
-        <form id="{{$t->id}}" action="{{ route('post.perma', $t->id) }}" method="post">
-            @csrf
-            @method('DELETE')
-        </form>
-       
-        @if(auth()->check())
-                @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-                <td class="text-center"><button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('{{ $t->id }}').submit();" class="btn btn-danger" type="submit">Delete Permanently</button></td>
-                    <form id="restore{{$t->id}}" action="{{ route('post.restore', $t->id) }}" method="put" style="display: inline;">
-                        @csrf
-                        @method('PUT')
-                        </form>
-                        <td class="text-center"><button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('restore{{$t->id}}').submit();"
-                        class="btn btn-success" type="submit">Restore</button></td>
-                @endif
-            @endif
     </tr>
+
 @endforeach
 </tbody>
         </table>
-        @if(auth()->check())
-                @if(auth()->user()->status=='High' || auth()->user()->status=='Medium')
-    <div class="text-center">
-    <form id="deleteAllForm" action="{{ route('post.permaall') }}" method="put" style="display: inline;">
-        @csrf
-        @method('DELETE')
-        <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('deleteAllForm').submit();" class="btn btn-danger" type="submit">Delete All Users Permanently</button></th>
+        <div class="text-center" >
+            <br><br>
+            <a class="btn btn-danger" style="width:100px;" id="back"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </form>
-    <form id="restoreAllForm" action="{{ route('post.restoreall') }}" method="put" style="display: inline;">
-        @csrf
-        @method('PUT')
-        <button onclick="event.preventDefault(); if (confirm('Are You Sure?')) document.getElementById('restoreAllForm').submit();" class="btn btn-warning" type="submit">Restore All Users</button></th>
-    </form></div><br>     @endif
-            @endif
-    <button type="button" class="btn btn-danger" style="width:100px;" id="back">Back</button>
-    <div class="text-center">
-    <form id="trash" action="{{ route('downloadAlltrash') }}" method="POST">
-    @csrf
-    <button id="trash2" onclick="event.preventDefault(); if (confirm('Are you sure you want to download all Trash Users?')) document.getElementById('trash').submit();" class="btn btn-primary" type="submit">Download All</button>
-</form>
-
 </div>
-    <script>
-    var selectAllCheckbox = document.getElementById("selectAllCheckbox");
-var checkboxes = document.querySelectorAll('input[type="checkbox"]:not(#selectAllCheckbox)');
-var deleteSelectedButton = document.getElementById('delete-selected-button');
 
-if (selectAllCheckbox) {
-    selectAllCheckbox.onclick = function() {
-        var isChecked = selectAllCheckbox.checked;
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].checked = isChecked;
-        }
-        updateDeleteButtonState();
-    };
-}
-
-for (var i = 0; i < checkboxes.length; i++) {
-    checkboxes[i].onclick = function() {
-        updateDeleteButtonState();
-    };
-}
-
-function updateDeleteButtonState() {
-    var anyCheckboxSelected = isAnyCheckboxSelected();
-    if (deleteSelectedButton) {
-        deleteSelectedButton.disabled = !anyCheckboxSelected;
-    }
-}
-
-function isAnyCheckboxSelected() {
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            return true;
-        }
-    }
-    return false;
-}
-
-</script>
-</form>
-
-                                </table>
-                            </div>
+    </div>
+</div>
                         </div>
                     </div>
 
@@ -767,14 +649,14 @@ $(document).ready(function() {
 
 
 <script>
-    var  delusers = document.getElementById("delusers");
+    var  upgrade = document.getElementById("upgrade");
   var table1 = document.getElementById("table1");
   var table2= document.getElementById("table2");
   var back= document.getElementById("back");
 
 
 
-  delusers.addEventListener("click", function() {
+  upgrade.addEventListener("click", function() {
     if (table1.style.display === "none" ) {
       table1.classList.add("fade-in");
       table1.style.display = "block";
@@ -794,7 +676,9 @@ $(document).ready(function() {
   table2.addEventListener("animationend", function() {
     table2.classList.remove("fade-in");
   });
-  var  delusers = document.getElementById("delusers");
+  
+</script>
+<script>
   var table1 = document.getElementById("table1");
   var table2= document.getElementById("table2");
   var back= document.getElementById("back");
@@ -803,16 +687,16 @@ $(document).ready(function() {
 
   back.addEventListener("click", function() {
     if (table2.style.display === "none" ) {
-      table1.classList.add("fade-in");
-      table1.style.display = "none";
-      table2.style.display = "block";
       table2.classList.add("fade-in");
+      table2.style.display = "block";
+      table1.style.display = "none";
+      table1.classList.add("fade-in");
      
     } else {
-        table1.classList.add("fade-in");
-      table1.style.display = "block";
+        table2.classList.add("fade-in");
       table2.style.display = "none";
-      table2.classList.add("fade-in");
+      table1.style.display = "block";
+      table1.classList.add("fade-in");
 
   }});
   table1.addEventListener("animationend", function() {
@@ -821,5 +705,6 @@ $(document).ready(function() {
   table2.addEventListener("animationend", function() {
     table2.classList.remove("fade-in");
   });
+  
 </script>
 </html>

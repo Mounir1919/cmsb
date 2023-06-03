@@ -18,6 +18,15 @@
                 <x-label for="email" value="{{ __('Email') }}" />
                 <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             </div>
+            <div class="mt-4">
+    <x-label for="status" value="{{ __('Status') }}" />
+    <select id="status" name="status" class="block mt-1 w-full rounded-md shadow-sm">
+        <option value="" disabled selected>Select Status</option>
+        <option value="High" {{ old('status') === 'High' ? 'selected' : '' }}>High</option>
+        <option value="Medium" {{ old('status') === 'Medium' ? 'selected' : '' }}>Medium</option>
+        <option value="Low" {{ old('status') === 'Low' ? 'selected' : '' }}>Low</option>
+    </select>
+</div>
 
             <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />

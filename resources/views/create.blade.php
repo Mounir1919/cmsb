@@ -71,7 +71,17 @@
     <option value="Femme" type="text">Femme</option>
   </select>
 @error('Gender')<p class="text-danger">{{ $message }}</p>@enderror
-</div>        
+</div>
+<div class="mb-3">
+<label for="pdf">Pdf:</label>
+<input type="file"  class="form-control @error('pdf') is-invalid @enderror" width="300px" id="pdf" name="pdf">
+@error('pdf')<p class="text-danger">{{ $message }}</p>@enderror
+            </div>
+            <div class="mb-3">
+<label for="pdf2">Pdf2:</label>
+<input type="file"  class="form-control @error('pdf2') is-invalid @enderror" width="300px" id="pdf2" name="pdf2">
+@error('pdf2')<p class="text-danger">{{ $message }}</p>@enderror
+            </div>     
 <br><br>
 <button type="submit"class="btn btn-success" style="width:100px;"> Add</button>
 

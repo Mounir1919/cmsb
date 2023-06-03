@@ -79,7 +79,18 @@
                 
            
             </li>
-
+            @if(auth()->check())
+            @if(auth()->user()->status == 'High')
+            <li class="nav-item" >
+                <a class="nav-link " href="{{route ('show_admin')}}">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span style="font-size:20px;">Admin </span>
+                </a>
+                
+           
+            </li>
+            @endif
+            @endif
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
@@ -185,18 +196,22 @@
                         </li>
 
                        <!-- Nav Item - Alerts -->
+@if(auth()->user()->status == 'High' || auth()->user()->status == 'Medium')
+
 <li class="nav-item dropdown no-arrow mx-1" >
     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
         @if(auth()->user()->unreadNotifications->count() > 0)
-            <span  class="badge badge-danger badge-counter">{{ auth()->user()->unreadNotifications->count() }}</span>
+            <span class="badge badge-danger badge-counter">{{ auth()->user()->unreadNotifications->count() }}</span>
         @endif
+@endif
+
     </a>
     <!-- Dropdown - Alerts -->
    
-    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="width: 474px !important;">
+    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" style="width: 650px !important;">
     <h6 class="dropdown-header">
         Alerts Center
     </h6>
@@ -220,12 +235,23 @@
                         <div class="small text-gray-500">{{ $notification->created_at->format('F d, Y') }}</div>
                         <span class="font-weight-bold">{{ $notification->data['message'] }}</span>
                     </div>
-                    <div class="ml-4">
-                        <form action="{{ route('confirm-user', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to confirm?')">Confirm</button>
-                        </form>
-                    </div>
+                    <div class="form-inline">
+    <div class="button-container">
+        <form action="{{ route('confirm-user', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to confirm?')">Confirm</button>
+        </form>
+    </div>&nbsp;&nbsp;
+    <div class="button-container">
+        <form action="{{ route('deletenotif', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to Delete?')">Delete</button>
+        </form>
+    </div>
+</div>
+
+
+
                 </div>
             </a>
         @endforeach
@@ -315,23 +341,36 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
-                                </a>
-                                <a class="dropdown-item" href="#">
+                                <form method="GET" action="{{ route('admin') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Home
+                                    </button>
+                                </form>
+                                <form method="GET" action="{{ route('profile.show') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Profile
+                                    </button>
+                                </form>
+                                    @if(auth()->check())
+                                    @if(auth()->user()->status=='High') 
+                                    <a class="dropdown-item" href="{{'show_admin'}}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    Edit Admin
                                 </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Activity Log
-                                </a>
+                                @endif
+                                @endif
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item" data-toggle="modal" data-target="#logoutModal">
+                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        Logout
+                                    </button>
+                                </form>
                             </div>
                         </li>
 
@@ -471,6 +510,10 @@
                             @csrf
                             <button type="submit" class="btn btn-sm btn-primary">Confirm</button>
                         </form>
+                        <form action="{{ route('deletenotif', ['id' => $notification->data['unconfirmed_user_id']]) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to Delete?')">Delete</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -480,9 +523,14 @@
     @csrf
     <button type="submit" class="btn btn-sm btn-primary" onclick="return confirm('Are you sure you want to confirm all users?')">Confirm all</button>
 </form>
+<form action="{{ route('deleteall') }}" method="POST" class="d-inline">
+    @csrf
+    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete all users?')">Delete all</button>
+</form>
    <a class="btn btn-sm btn-danger" id="back"style="cursor:pointer;width:100px;"><i class="fa-solid fa-arrow-left"></i> back</a>
 
 </div>
+
 
 
                                 <!-- Card Header - Dropdown -->

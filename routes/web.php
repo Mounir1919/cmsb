@@ -35,17 +35,26 @@ Route::delete('/posts/delete-multiple', [Controller2::class, 'deleteMultiple'])-
 Route::get('/users/download', [Controller2::class, 'downloadUsers'])->name('users.download');
 Route::get('/Confirm', [Controller2::class, 'confirmed'])->name('confirmed');
 Route::any('/Confirmall', [Controller2::class, 'confirmAllUsers'])->name('confirmAllUsers');
+Route::any('/deleteUser/{id}', [Controller2::class, 'deletenotif'])->name('deletenotif');
+Route::any('/deleteUsers', [Controller2::class, 'deleteall'])->name('deleteall');
+Route::get('/download-rar/{pdf}/{pdf2}/{name}/{image?}', [Controller2::class, 'downloadRAR'])->name('downloadRAR');
+Route::get('/trashRAR/{pdf}/{pdf2}/{name}/{image?}', [Controller2::class, 'trashRAR'])->name('trashRAR');
+Route::get('/users/download-all', [Controller2::class, 'downloadAll'])->name('users.downloadAll');
+Route::post('/users/Trash', [Controller2::class, 'downloadAlltrash'])->name('downloadAlltrash');
+Route::get('/show_admin', [Controller2::class, 'show_admin'])->name('show_admin');
+Route::delete('/D_admin/{id}', [Controller2::class, 'delete_admin'])->name('delete_admin');
+Route::post('/users/{id}', [Controller2::class, 'up'])->name('up');
+
+// Remove or comment out the duplicate 'home' route
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return redirect('home');
+    // Redirect the user to the profile page
+    Route::get('/', function () {
+        return redirect('/user/profile');
     })->name('dashboard');
 });
-
-
-// Remove or comment out the duplicate 'home' route
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
